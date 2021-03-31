@@ -1,0 +1,29 @@
+[
+  {
+    "name": "United Arab Emirates",
+    "code": "UAE",
+    "cities": [
+      {
+        "name": "Dubai"
+      },
+      {
+        "name": "Abu Dhabi"
+      },
+      {
+        "name": "Sharjah"
+      },
+      {
+        "name": "Ras Al Khaimah"
+      },
+      {
+        "name": "Fujairah"
+      },
+      {
+        "name": "Ajman"
+      },
+      {
+        "name": "Umm Al Quwain"
+      }
+    ]
+  }
+]

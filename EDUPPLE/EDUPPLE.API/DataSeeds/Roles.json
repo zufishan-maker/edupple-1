@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Super Administrator",
+    "normalizedname": "SUPER ADMINISTRATOR"
+  },
+  {
+    "name": "Administrator",
+    "normalizedname": "ADMINISTRATOR"
+  },
+  {
+    "name": "Tutor",
+    "normalizedname": "TUTOR"
+  },
+  {
+    "name": "Student",
+    "normalizedname": "STUDENT"
+  },
+  {
+    "name": "Guest",
+    "normalizedname": "GUEST"
+  }
+]
