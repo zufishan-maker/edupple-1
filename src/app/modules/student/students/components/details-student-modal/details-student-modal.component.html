@@ -1,0 +1,399 @@
+<div class="modal-content">
+  <!-- <div class="modal-header">
+    <div class="modal-title h4" id="example-modal-sizes-title-lg">
+      <ng-container *ngIf="student">
+        <ng-container *ngIf="student.id">{{"STUDENT.STUDENTS.EDIT_STUDENT" | translate}}</ng-container>
+        <ng-container *ngIf="!student.id">{{"STUDENT.STUDENTS.CREATE_STUDENT" | translate}}</ng-container>
+        <ng-container *ngIf="student.id">'{{student.fullName}}'</ng-container>
+      </ng-container>
+    </div>
+  </div> -->
+  <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+    <ng-container *ngIf="isLoading$ | async">
+      <div class="overlay-layer bg-transparent">
+        <div class="spinner spinner-lg spinner-success"></div>
+      </div>
+    </ng-container>
+
+    <div class="card-body">
+      <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+        <li class="nav-item cursor-pointer" (click)="changeTab(tabs.BASIC_TAB)">
+          <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.BASIC_TAB"
+            [class.active]="activeTabId === tabs.BASIC_TAB">
+            Basic info
+          </a>
+        </li>
+        <li *ngIf="student && student.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.PAYMENT_TAB)">
+          <a class="nav-link" data-toggle="tab" role="button" [attr.aria-selected]="activeTabId === tabs.PAYMENT_TAB"
+            [class.active]="activeTabId === tabs.PAYMENT_TAB">Payment History</a>
+        </li>
+        <li *ngIf="student && student.id" class="nav-item cursor-pointer" (click)="changeTab(tabs.COURSES_TAB)">
+          <a class="nav-link" data-toggle="tab" role="tab" [attr.aria-selected]="activeTabId === tabs.COURSES_TAB"
+            [class.active]="activeTabId === tabs.COURSES_TAB">Courses History</a>
+        </li>
+      </ul>
+      <br />
+      <br />
+
+      <ng-container *ngIf="activeTabId === tabs.BASIC_TAB">
+
+        <div class="form-group row">
+
+          <div class="col-lg-12">
+            <div class="row">
+              <!-- IMAGE -->
+              <div class="col-lg-2">
+                <div class="flex-shrink-0 mr-7">
+                  <div class="symbol symbol-50 symbol-lg-120">
+                    <img alt="Pic" src="../../../../../../assets/media//users/300_17.jpg">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="row">
+                  <!-- NAME -->
+                  <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.FULL_NAME" | translate}}:</label>
+                  <div class="col-8">
+                    <span class="form-control-plaintext font-weight-bolder">{{student.fullName}}</span>
+                  </div>
+                  <!-- UNIVERSITY NAME -->
+                  <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.UNIVERSITY_NAME" | translate}}:</label>
+                  <div class="col-8">
+                    <span class="form-control-plaintext font-weight-bolder">{{student.universityName}}</span>
+                  </div>
+                  <!-- STATUS -->
+                  <div class="col-12">
+                    <span class="label label-lg label-inline" [class.label-light-danger]="student.status === 1"
+                      [class.label-light-success]="student.status === 2"
+                      [class.label-light-primary]="student.status === 3">
+                      <ng-container *ngIf="student.status === 1">Suspended</ng-container>
+                      <ng-container *ngIf="student.status === 2">Active</ng-container>
+                      <ng-container *ngIf="student.status === 3">Pending</ng-container>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.GENDER" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.gender}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.DATE_OF_BIRTH" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.dateOfBbirth}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.EMAIL" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.email}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.PHONE_NUMBER" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.phoneNumber}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.COUNTRY" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.country}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.CITY" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.city}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <label class="col-4 col-form-label">{{"STUDENT.STUDENTS.FORM.SUBJECTS" | translate}}:</label>
+              <div class="col-8">
+                <span class="form-control-plaintext font-weight-bolder">{{student.subjects}}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === tabs.PAYMENT_TAB">
+        <div class="timeline timeline-3">
+          <div class="timeline-items">
+            <div class="timeline-item">
+              <div class="timeline-media">
+                <i class="flaticon2-notification fl text-primary"></i>
+              </div>
+              <div class="timeline-content">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <div class="mr-2">
+                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">New order has been placed</a>
+                    <span class="text-muted ml-2">Today</span>
+                    <span class="label label-light-success font-weight-bolder label-inline ml-2">new</span>
+                  </div>
+                </div>
+                <p class="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-media">
+                <i class="flaticon2-shield text-danger"></i>
+              </div>
+              <div class="timeline-content">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <div class="mr-2">
+                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">Member has sent a request.</a>
+                    <span class="text-muted ml-2">8:30PM 20 June</span>
+                    <span class="label label-light-danger font-weight-bolder label-inline ml-2">pending</span>
+                  </div>
+                </div>
+                <p class="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-media">
+                <i class="flaticon2-layers text-warning"></i>
+              </div>
+              <div class="timeline-content">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <div class="mr-2">
+                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">System deployment has been
+                      completed.</a>
+                    <span class="text-muted ml-2">11:00AM 30 June</span>
+                    <span class="label label-light-warning font-weight-bolder label-inline ml-2">done</span>
+                  </div>
+                </div>
+                <p class="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-media">
+                <i class="flaticon2-notification fl text-primary"></i>
+              </div>
+              <div class="timeline-content">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <div class="mr-2">
+                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">Database backup has been
+                      completed.</a>
+                    <span class="text-muted ml-2">2 months ago</span>
+                    <span class="label label-light-primary font-weight-bolder label-inline ml-2">delivered</span>
+                  </div>
+                </div>
+                <p class="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === tabs.COURSES_TAB">
+        <div class="card-body pt-4">
+          <!--begin::Timeline-->
+          <div class="timeline timeline-6 mt-3">
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">08:42</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-warning icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Text-->
+              <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Outlines keep you honest.
+                And keep structure</div>
+              <!--end::Text-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">10:00</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-success icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Content-->
+              <div class="timeline-content d-flex">
+                <span class="font-weight-bolder text-dark-75 pl-3 font-size-lg">AEOL meeting</span>
+              </div>
+              <!--end::Content-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">14:37</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-danger icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Desc-->
+              <div class="timeline-content font-weight-bolder font-size-lg text-dark-75 pl-3">Make deposit
+                <a href="#" class="text-primary">USD 700</a>. to ESL
+              </div>
+              <!--end::Desc-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">16:50</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-primary icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Text-->
+              <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Indulging in poorly driving
+                and keep structure keep great</div>
+              <!--end::Text-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">21:03</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-danger icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Desc-->
+              <div class="timeline-content font-weight-bolder text-dark-75 pl-3 font-size-lg">New order placed
+                <a href="#" class="text-primary">#XF-2356</a>.
+              </div>
+              <!--end::Desc-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">23:07</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-info icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Text-->
+              <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Outlines keep and you
+                honest. Indulging in poorly driving</div>
+              <!--end::Text-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">21:03</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-danger icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Desc-->
+              <div class="timeline-content font-weight-bolder text-dark-75 pl-3 font-size-lg">New order placed
+                <a href="#" class="text-primary">#XF-2356</a>.
+              </div>
+              <!--end::Desc-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">16:50</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-primary icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Text-->
+              <div class="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Indulging in poorly driving
+                and keep structure keep great</div>
+              <!--end::Text-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">10:00</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-success icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Content-->
+              <div class="timeline-content d-flex">
+                <span class="font-weight-bolder text-dark-75 pl-3 font-size-lg">AEOL meeting</span>
+              </div>
+              <!--end::Content-->
+            </div>
+            <!--end::Item-->
+            <!--begin::Item-->
+            <div class="timeline-item align-items-start">
+              <!--begin::Label-->
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">08:42</div>
+              <!--end::Label-->
+              <!--begin::Badge-->
+              <div class="timeline-badge">
+                <i class="fa fa-genderless text-warning icon-xl"></i>
+              </div>
+              <!--end::Badge-->
+              <!--begin::Text-->
+              <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Outlines keep you honest.
+                And keep structure</div>
+              <!--end::Text-->
+            </div>
+            <!--end::Item-->
+          </div>
+          <!--end::Timeline-->
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">{{"BUTTONS.CLOSE" |
+        translate}}</button>
+    </div>
+  </div>

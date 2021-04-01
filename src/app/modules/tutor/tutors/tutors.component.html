@@ -1,0 +1,209 @@
+<div class="card card-custom gutter-b">
+  <div class="card-header">
+    <div class="card-title">
+      <h3 class="card-label">{{"TUTOR.TUTORS.TUTORS_LIST" | translate}}</h3>
+    </div>
+    <div class="card-toolbar">
+      <button type="button" class="btn btn-primary" (click)="create()">{{"TUTOR.TUTORS.NEW_TUTOR" | translate}}</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- begin: Filtration form -->
+    <div class="form form-label-right">
+      <div class="form-group row">
+        <div class="col-lg-4">
+          <div class="row" [formGroup]="filterGroup">
+            <div class="col-lg-6">
+              <select class="form-control" name="status" placeholder="Filter by Status" formControlName="status">
+                <option value="">All</option>
+                <option value="1">Susspended</option>
+                <option value="2">Active</option>
+                <option value="3">Pending</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Status</small>
+            </div>
+            <!-- <div class="col-lg-6">
+              <select class="form-control" placeholder="Filter by Type" name="type" formControlName="type">
+                <option value="">All</option>
+                <option value="1">Business</option>
+                <option value="2">Individual</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Type</small>
+            </div> -->
+            <div class="col-lg-6" [formGroup]="searchGroup">
+              <input type="text" class="form-control" name="searchText" placeholder="Search" value=""
+                formControlName="searchTerm" /><small class="form-text text-muted"><b>{{"TUTOR.COMMON.SEARCH" | translate}}</b> {{"TUTOR.COMMON.IN_ALL_FIELDS" | translate}}</small>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-lg-2" [formGroup]="searchGroup">
+          <input type="text" class="form-control" name="searchText" placeholder="Search" value=""
+            formControlName="searchTerm" /><small class="form-text text-muted"><b>{{"TUTOR.COMMON.SEARCH" | translate}}</b> {{"TUTOR.COMMON.IN_ALL_FIELDS" | translate}}</small>
+        </div> -->
+      </div>
+    </div>
+    <!-- end: Filtration form -->
+
+    <!-- begin: Grouping -->
+    <ng-container *ngIf="grouping.getSelectedRowsCount()">
+      <div class="form">
+        <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+          <div class="col-xl-12">
+            <div class="form-group form-group-inline">
+              <div class="form-label form-label-no-wrap">
+                <label class="font-bold font-danger"><span>{{"TUTOR.COMMON.SELECTED_RECORDS_COUNT" | translate}}
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+              </div>
+              <div>
+                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                  (click)="deleteSelected()">
+                  <i class="fa fa-trash"></i> {{"TUTOR.COMMON.DELETE_ALL" | translate}}
+                </button>&nbsp;
+                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                  (click)="fetchSelected()">
+                  <i class="fa fa-stream"></i> {{"TUTOR.COMMON.FETCH_SELECTED" | translate}}
+                </button>&nbsp;
+                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                  (click)="updateStatusForSelected()">
+                  <i class="fa fa-sync-alt"></i> {{"TUTOR.COMMON.UPDATE_STATUS" | translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- end: Grouping -->
+
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+      <table class="table table-head-custom table-vertical-center overflow-hidden">
+        <thead>
+          <th class="selection-cell-header" data-row-selection="true">
+            <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+          </th>
+          <th>
+            ID
+            <app-sort-icon column="id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <th>
+            FULLNAME
+            <app-sort-icon column="fullName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <th>
+            UNIVERSITY-NAME
+            <app-sort-icon column="universityName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <!-- <th>
+            COUNTRY
+            <app-sort-icon column="country" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th> -->
+          <th>
+            PHONE_NUMBER
+            <app-sort-icon column="phoneNumber" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <th>
+            GENDER
+            <app-sort-icon column="gender" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <!-- <th>
+            COUNTRY
+            <app-sort-icon column="country" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+          <th>
+            CITY
+            <app-sort-icon column="city" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th> -->
+          <!-- <th>
+            SUBJECTS
+            <app-sort-icon column="subjects" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th> -->
+          <!-- <th>
+            DATE-OF-BIRTH
+            <app-sort-icon column="dateOfBbirth" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th> -->
+          <th>
+            STATUS
+            <app-sort-icon column="status" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon>
+          </th>
+
+
+          <th>ACTIONS</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tutor of tutorsService.items$ | async">
+            <td class="selection-cell">
+              <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(tutor.id)"
+                  [checked]="grouping.isRowSelected(tutor.id)" />
+                <span></span>
+              </label>
+            </td>
+            <td>{{ tutor.id }}</td>
+            <td>
+              <!-- <a href="javascript:void(0);" (click)="details(tutor.id)" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">
+                {{ tutor.fullName }}
+              </a> -->
+              <span style="width: 250px;">
+                <div class="d-flex align-items-center">
+                  <div class="symbol symbol-40 symbol-sm flex-shrink-0"> <img class=""
+                      src="assets/media/users/300_17.jpg" alt="photo"> </div>
+                  <div class="ml-4">
+                    <a href="javascript:void(0);" (click)="details(tutor.id)"
+                      class=" text-dark-75 text-hover-primary font-weight-bolder font-size-lg mb-0">
+                      {{ tutor.fullName}}
+                    </a>
+                    <div class="text-muted font-weight-bold">{{ tutor.email }}</div>
+                  </div>
+                </div>
+              </span>
+            </td>
+            <td>{{ tutor.universityName }}</td>
+            <!-- <td>{{ tutor.email }}</td> -->
+            <td>{{ tutor.phoneNumber }}</td>
+            <td>{{ tutor.gender }}</td>
+            <!-- <td>{{ tutor.country }}</td>
+            <td>{{ tutor.city }}</td> -->
+            <!-- <td>{{ tutor.subjects }}</td> -->
+            <!-- <td>{{ tutor.dateOfBbirth }}</td> -->
+            <td>
+              <span class="label label-lg label-inline" [class.label-light-danger]="tutor.status === 1"
+                [class.label-light-success]="tutor.status === 2" [class.label-light-primary]="tutor.status === 3">
+                <ng-container *ngIf="tutor.status === 1">Suspended</ng-container>
+                <ng-container *ngIf="tutor.status === 2">Active</ng-container>
+                <ng-container *ngIf="tutor.status === 3">Pending</ng-container>
+              </span>
+            </td>
+            <td>
+              <a title="Edit tutor" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                (click)="edit(tutor.id)">
+                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-primary">
+                </span>
+              </a>
+
+              <a title="Delete tutor" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                (click)="delete(tutor.id)">
+                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-danger">
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- end: Table -->
+    <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+      [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<!--begin::Menu Container-->
+<div id="kt_aside_menu" class="aside-menu min-h-lg-800px" [ngClass]="asideMenuCSSClasses" data-menu-vertical="1"
+  [attr.data-menu-scroll]="asideMenuScroll" [attr.data-menu-dropdown]="asideMenuDropdown"
+  data-menu-dropdown-timeout="500">
+  <!-- begin::Menu Nav -->
+  <ul class="menu-nav px-10 py-5" [ngClass]="ulCSSClasses">
+    <!-- begin::1 Level -->
+    <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <a class="menu-link" routerLink="/dashboard" routerLinkActive="active">
+        <span [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'" cacheSVG="true"
+          class="svg-icon menu-icon"></span>
+        <span class="menu-text" translate="MENU.DASHBOARD"></span>
+      </a>
+    </li>
+    <!-- end::1 Level -->
+
+     <!-- begin::1 Level STUDENT -->
+     <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <a class="menu-link" routerLink="/student" routerLinkActive="active">
+        <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true"
+          class="svg-icon menu-icon"></span>
+        <span class="menu-text" translate="MENU.STUDENT"></span>
+      </a>
+    </li>
+    <!-- end::1 Level STUDENT -->
+
+    <!-- begin::1 Level TUTOR -->
+    <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <a class="menu-link" routerLink="/tutor" routerLinkActive="active">
+        <span [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'" cacheSVG="true"
+          class="svg-icon menu-icon"></span>
+        <span class="menu-text" translate="MENU.TUTOR"></span>
+      </a>
+    </li>
+    <!-- end::1 Level TUTOR -->
+
+
+    <!-- CONFIGURATIONS -->
+    <!-- begin::section -->
+    <li class="menu-section">
+      <h4 class="menu-text">Configurations</h4>
+      <i class="menu-icon flaticon-more-v2"></i>
+    </li>
+    <!-- end:: section -->
+
+   <!-- Configurations -->
+    <!-- begin::1 CONFIGURATIONS -->
+    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"
+      routerLinkActive="menu-item-open">
+      <a class="menu-link menu-toggle" routerLinkActive="active" href="/configuration">
+        <span [inlineSVG]="'./assets/media/svg/icons/General/Settings-2.svg'" cacheSVG="true"
+          class="svg-icon menu-icon"></span>
+        <span class="menu-text">Configurations</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu">
+        <i class="menu-arrow"></i>
+        <ul class="menu-subnav">
+         
+          <!-- begin::2 COUNTRIES -->
+          <li class="menu-item" routerLinkActive="menu-item-active" aria-haspopup="true" data-menu-toggle="hover">
+            <a class="menu-link" routerLink="/configuration/countries" routerLinkActive="active">
+              <i class="menu-bullet menu-bullet-dot">
+                <span></span>
+              </i>
+              <span class="menu-text">Countries</span>
+            </a>
+          </li>
+          <!-- end::2 COUNTRIES -->
+          <!-- begin::2 CITIES -->
+          <li class="menu-item" routerLinkActive="menu-item-active" aria-haspopup="true" data-menu-toggle="hover">
+            <a class="menu-link" routerLink="/configuration/cities" routerLinkActive="active">
+              <i class="menu-bullet menu-bullet-dot">
+                <span></span>
+              </i>
+              <span class="menu-text">Cities</span>
+            </a>
+          </li>
+          <!-- end::2 CITIES -->
+        </ul>
+      </div>
+    </li>
+    <!-- end::1 CONFIGURATIONS -->
+
+
+
+
+
+    <!-- begin::1 Level -->
+    <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <a class="menu-link" routerLink="/builder" routerLinkActive="active">
+        <span [inlineSVG]="'./assets/media/svg/icons/Home/Library.svg'" cacheSVG="true"
+          class="svg-icon menu-icon"></span>
+        <span class="menu-text">Layout Builder</span>
+      </a>
+    </li>
+    <!-- end::1 Level -->
+
+
+  </ul>
+  <!-- end::Menu Nav -->
+</div>
+<!--end::Menu Container-->

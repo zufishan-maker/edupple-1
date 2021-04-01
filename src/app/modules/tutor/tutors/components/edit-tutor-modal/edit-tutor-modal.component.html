@@ -1,0 +1,177 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="modal-title h4" id="example-modal-sizes-title-lg">
+      <ng-container *ngIf="tutor">
+        <ng-container *ngIf="tutor.id">{{"TUTOR.TUTORS.EDIT_TUTOR" | translate}}</ng-container>
+        <ng-container *ngIf="!tutor.id">{{"TUTOR.TUTORS.CREATE_TUTOR" | translate}}</ng-container>
+        <ng-container *ngIf="tutor.id">'{{tutor.fullName}}'</ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+    <ng-container *ngIf="isLoading$ | async">
+      <div class="overlay-layer bg-transparent">
+        <div class="spinner spinner-lg spinner-success"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="tutor">
+      <form action="#" class="form form-label-right" [formGroup]="formGroup">
+        <div class="form-group row">
+
+          <div class="col-lg-4">
+            <label class="form-label">{{"TUTOR.TUTORS.FORM.FULL_NAME" | translate}}</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="fullName"
+              placeholder="Full Name" autocomplete="off" [class.is-invalid]="isControlInvalid('fullName')"
+              [class.is-valid]="isControlValid('fullName')" formControlName="fullName" />
+            <div class="valid-feedback" *ngIf="isControlValid('fullName')">First name was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'fullName')">First name is required</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'fullName')">First name should have at
+              least 3 symbols</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'fullName')">First name should have
+              maximum 100 symbols</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label class="form-label">{{"TUTOR.TUTORS.FORM.UNIVERSITY_NAME" | translate}}</label>
+            <input type="text" class="form-control form-control-lg form-control-solid  is-invalid" name="universityName"
+              placeholder="University Name" autocomplete="off" [class.is-invalid]="isControlInvalid('universityName')"
+              [class.is-valid]="isControlValid('universityName')" formControlName="universityName" />
+            <div class="valid-feedback" *ngIf="isControlValid('universityName')">Last name was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'universityName')">Last name is required
+            </div>
+            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'universityName')">Last name should have
+              at
+              least 3 symbols</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'universityName')">Last name should have
+              maximum
+              100 symbols</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label>Select Gender</label>
+            <select class="form-control form-control-lg form-control-solid" name="gender"
+              [class.is-invalid]="isControlInvalid('gender')" formControlName="gender">
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+            <!-- <div class="feedback">Please select <b>Gender</b></div> -->
+          </div>
+
+        </div>
+        <div class="form-group row">
+
+          <div class="col-lg-4">
+            <label class="form-label">Enter Email</label>
+            <input type="email" class="form-control form-control-lg form-control-solid" name="email" placeholder="Email"
+              autocomplete="off" [class.is-invalid]="isControlInvalid('email')"
+              [class.is-valid]="isControlValid('email')" formControlName="email" />
+            <div class="valid-feedback" *ngIf="isControlValid('email')">Email was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'email')">Email is required</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('email', 'email')">Email format is incorrect</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label class="form-label">Phone Number</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="phoneNumber"
+              placeholder="Phone Number" autocomplete="off" [class.is-invalid]="isControlInvalid('phoneNumber')"
+              [class.is-valid]="isControlValid('phoneNumber')" formControlName="phoneNumber" />
+            <div class="valid-feedback" *ngIf="isControlValid('phoneNumber')">Login was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'phoneNumber')">Login is required</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label>Date of Birth</label>
+            <div class="input-group input-group-solid">
+              <input type="text" name="dob" class="form-control form-control-lg form-control-solid" autocomplete="off"
+                placeholder="dd/mm/yyyy" ngbDatepicker #d="ngbDatepicker" [class.is-invalid]="isControlInvalid('dob')"
+                [class.is-valid]="isControlValid('dob')" formControlName="dob" readonly="true" />
+              <div class="input-group-append" (click)="d.toggle()">
+                <span class="input-group-text">
+                  <i class="text-dark-50 flaticon-calendar"></i>
+                </span>
+              </div>
+            </div>
+            <div class="valid-feedback" *ngIf="isControlValid('dob')">Date of Birth was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'dob')">Please enter <b>Date of Birth</b>
+              in 'mm/dd/yyyy' format</div>
+          </div>
+
+        </div>
+        <div class="form-group row">
+
+          <div class="col-lg-4">
+            <label>Country</label>
+            <select class="form-control form-control-lg form-control-solid" name="country"
+              [class.is-invalid]="isControlInvalid('country')" formControlName="country">
+              <option *ngFor="let option of countriesList" [value]="option.id">
+                <span *ngIf="selectedLanguage == 'en'">{{option.enName}}</span>
+                <span *ngIf="selectedLanguage == 'ar'">{{option.arName}}</span>
+              </option>
+            </select>
+            <!-- <div class="feedback">Please select <b>country</b></div> -->
+          </div>
+
+          <div class="col-lg-4">
+            <label>City</label>
+            <select class="form-control form-control-lg form-control-solid" name="city"
+              [class.is-invalid]="isControlInvalid('city')" formControlName="city">
+              <option *ngFor="let option of citiesList" [value]="option.id">
+                <span *ngIf="selectedLanguage == 'en'">{{option.enName}}</span>
+                <span *ngIf="selectedLanguage == 'ar'">{{option.arName}}</span>
+              </option>
+            </select>
+            <!-- <div class="feedback">Please select <b>city</b></div> -->
+          </div>
+
+          <div class="col-lg-4">
+            <label class="form-label">Hourly Rate</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="hourlyRate"
+              placeholder="Hourly Rate" autocomplete="off" [class.is-invalid]="isControlInvalid('hourlyRate')"
+              [class.is-valid]="isControlValid('hourlyRate')" formControlName="hourlyRate" />
+            <div class="valid-feedback" *ngIf="isControlValid('hourlyRate')">Login was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'hourlyRate')">Login is required</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label>Subjects</label>
+            <ng-multiselect-dropdown class="form-control form-control-lg form-control-solid"
+              [placeholder]="'custom placeholder'" [settings]="dropdownSettings" [data]="dropdownList" formControlName="subjects"
+               (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+            <ng-template #optionsTemplate let-item let-option="option" let-id="id" let-isSelected="isSelected">
+              <div style="padding:1px 10px;margin-right:10px;right:2px;top:-2px">
+                <label>
+                  {{option}}
+                </label>
+              </div>
+            </ng-template>
+            <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+              <div>
+                {{option}}
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="col-lg-4">
+            <label class="form-label">Description</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="description"
+              placeholder="Hourly Rate" autocomplete="off" [class.is-invalid]="isControlInvalid('description')"
+              [class.is-valid]="isControlValid('description')" formControlName="description" />
+            <div class="valid-feedback" *ngIf="isControlValid('description')">Login was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">Login is required</div>
+          </div>
+
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+    <ng-container *ngIf="tutor">
+
+      <button type="submit" class="btn btn-primary btn-elevate" (click)="save()"
+        [disabled]="formGroup.invalid">Save</button>
+    </ng-container>
+  </div>
+</div>

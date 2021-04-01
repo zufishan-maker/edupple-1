@@ -1,0 +1,161 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+      <div class="card-title">
+        <h3 class="card-label">{{"CITY.CITIES.CITIES_LIST" | translate}}</h3>
+      </div>
+      <div class="card-toolbar">
+        <button type="button" class="btn btn-primary" (click)="create()">{{"CITY.CITIES.NEW_CITY" | translate}}</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- begin: Filtration form -->
+      <div class="form form-label-right">
+        <div class="form-group row">
+          <div class="col-lg-12">
+            <div class="row" [formGroup]="filterGroup">
+              <div class="col-lg-4">
+                <select class="form-control" name="country" placeholder="Filter by Country" formControlName="country">
+                  <option value="">All</option>
+                  <option *ngFor="let option of countries" [value]="option.id">
+                    <span *ngIf="selectedLanguage == 'en'">{{option.enName}}</span>
+                    <span *ngIf="selectedLanguage == 'ar'">{{option.arName}}</span>
+                  </option>
+                </select><small class="form-text text-muted"><b>Filter</b> by Country</small>
+              </div>
+              <div class="col-lg-4">
+                <select class="form-control" name="status" placeholder="Filter by Status" formControlName="status">
+                  <option value="">All</option>
+                  <option value="1">Susspended</option>
+                  <option value="2">Active</option>
+                  <option value="3">Pending</option>
+                </select><small class="form-text text-muted"><b>Filter</b> by Status</small>
+              </div>
+              <div class="col-lg-4" [formGroup]="searchGroup">
+                <input type="text" class="form-control" name="searchText" placeholder="Search" value=""
+                  formControlName="searchTerm" /><small class="form-text text-muted"><b>{{"CITY.COMMON.SEARCH" | translate}}</b> {{"CITY.COMMON.IN_ALL_FIELDS" | translate}}</small>
+              </div>
+              <!-- <div class="col-lg-6">
+                <select class="form-control" placeholder="Filter by Type" name="type" formControlName="type">
+                  <option value="">All</option>
+                  <option value="1">Business</option>
+                  <option value="2">Individual</option>
+                </select><small class="form-text text-muted"><b>Filter</b> by Type</small>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <!-- end: Filtration form -->
+  
+      <!-- begin: Grouping -->
+      <ng-container *ngIf="grouping.getSelectedRowsCount()">
+        <div class="form">
+          <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+            <div class="col-xl-12">
+              <div class="form-group form-group-inline">
+                <div class="form-label form-label-no-wrap">
+                  <label class="font-bold font-danger"><span>{{"CITY.COMMON.SELECTED_RECORDS_COUNT" | translate}}
+                      <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                    (click)="deleteSelected()">
+                    <i class="fa fa-trash"></i> {{"CITY.COMMON.DELETE_ALL" | translate}}
+                  </button>&nbsp;
+                  <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                    (click)="fetchSelected()">
+                    <i class="fa fa-stream"></i> {{"CITY.COMMON.FETCH_SELECTED" | translate}}
+                  </button>&nbsp;
+                  <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                    (click)="updateStatusForSelected()">
+                    <i class="fa fa-sync-alt"></i> {{"CITY.COMMON.UPDATE_STATUS" | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- end: Grouping -->
+  
+      <!-- begin:Table -->
+      <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-vertical-center overflow-hidden">
+          <thead>
+            <th class="selection-cell-header" data-row-selection="true">
+              <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                  [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+            </th>
+            <th>
+              {{"CITY.CITIES.TABLE.COL_1" | translate}}
+              <app-sort-icon column="id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                (sort)="sort($event)"></app-sort-icon>
+            </th>
+            <th>
+              {{"CITY.CITIES.TABLE.COL_2" | translate}}
+              <app-sort-icon column="enName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                (sort)="sort($event)"></app-sort-icon>
+            </th>
+            <th>
+              {{"CITY.CITIES.TABLE.COL_3" | translate}}
+              <app-sort-icon column="arName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                (sort)="sort($event)"></app-sort-icon>
+            </th>
+            <th>
+              {{"CITY.CITIES.TABLE.COL_4" | translate}}
+              <app-sort-icon column="country_Id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                (sort)="sort($event)"></app-sort-icon>
+            </th>
+            <th>
+              {{"CITY.CITIES.TABLE.COL_5" | translate}}
+              <app-sort-icon column="status" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                (sort)="sort($event)"></app-sort-icon>
+            </th>
+            <th>{{"CITY.CITIES.TABLE.COL_6" | translate}}</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let city of citiesService.items$ | async">
+              <td class="selection-cell">
+                <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(city.id)"
+                    [checked]="grouping.isRowSelected(city.id)" />
+                  <span></span>
+                </label>
+              </td>
+              <td>{{ city.id }}</td>
+              <td>{{ city.enName }}</td>
+              <td>{{ city.arName }}</td>
+              <td>{{ getCountryById(city.country_Id) }}</td>
+              <td>
+                <span class="label label-lg label-inline" [class.label-light-danger]="city.status === 1"
+                  [class.label-light-success]="city.status === 2" [class.label-light-primary]="city.status === 3">
+                  <ng-container *ngIf="city.status === 1">Suspended</ng-container>
+                  <ng-container *ngIf="city.status === 2">Active</ng-container>
+                  <ng-container *ngIf="city.status === 3">Pending</ng-container>
+                </span>
+              </td>
+              <td>
+  
+                <a title="Edit city" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                  (click)="edit(city.id)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-primary">
+                  </span>
+                </a>
+  
+                <a title="Delete city" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                  (click)="delete(city.id)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-danger">
+                  </span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end: Table -->
+      <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+        [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+    </div>
+  </div>

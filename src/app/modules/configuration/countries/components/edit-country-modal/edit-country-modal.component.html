@@ -1,0 +1,65 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="modal-title h4" id="example-modal-sizes-title-lg">
+      <ng-container *ngIf="country">
+        <ng-container *ngIf="country.id">{{"COUNTRY.COUNTRIES.EDIT_COUNTRY" | translate}}</ng-container>
+        <ng-container *ngIf="!country.id">{{"COUNTRY.COUNTRIES.CREATE_COUNTRY" | translate}}</ng-container>
+        <ng-container *ngIf="country.id">'{{country.enName}} {{ country.arName }}'</ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <div class="overlay overlay-block cursor-default modal-body" style="min-height: 202px;">
+    <ng-container *ngIf="isLoading$ | async">
+      <div class="overlay-layer bg-transparent">
+        <div class="spinner spinner-lg spinner-success"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="country">
+      <form action="#" class="form form-label-right" [formGroup]="formGroup">
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label class="form-label">{{"COUNTRY.COUNTRIES.FORM.ENGLISH_NAME" | translate}}</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="enName"
+              placeholder="Ar Name" autocomplete="off" [class.is-invalid]="isControlInvalid('enName')"
+              [class.is-valid]="isControlValid('enName')" formControlName="enName" />
+            <div class="valid-feedback" *ngIf="isControlValid('enName')">En name was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'enName')">En name is required</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'enName')">En name should have at
+              least 3 symbols</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'enName')">En name should have
+              maximum 100 symbols</div>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label">{{"COUNTRY.COUNTRIES.FORM.ARABIC_NAME" | translate}}</label>
+            <input type="text" class="form-control form-control-lg form-control-solid  is-invalid" name="arName"
+              placeholder="Ar Name" autocomplete="off" [class.is-invalid]="isControlInvalid('arName')"
+              [class.is-valid]="isControlValid('arName')" formControlName="arName" />
+            <div class="valid-feedback" *ngIf="isControlValid('arName')">Ar name was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'arName')">Ar name is required</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'arName')">Ar name should have at
+              least 3 symbols</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'arName')">Ar name should have maximum
+              100 symbols</div>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label">{{"COUNTRY.COUNTRIES.FORM.ISO2" | translate}}</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="ISO2"
+              placeholder="ISO 2" autocomplete="off" [class.is-invalid]="isControlInvalid('ISO2')"
+              [class.is-valid]="isControlValid('ISO2')" formControlName="ISO2" />
+            <div class="valid-feedback" *ngIf="isControlValid('ISO2')">ISO2 was entered correct</div>
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'ISO2')">ISO2 is required</div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancel</button>
+    <ng-container *ngIf="country">
+
+      <button type="submit" class="btn btn-primary btn-elevate" (click)="save()"
+        [disabled]="formGroup.invalid">Save</button>
+    </ng-container>
+  </div>
+</div>
